@@ -2,6 +2,8 @@
 
 > Library for updating dynamic DNS.
 
+[![NPM](https://nodei.co/npm/pm2.png?downloads=true&downloadRank=true)](https://nodei.co/npm/ddns-updater/)
+
 The library supports the following Dynamic DNS services:  
 * [Namecheap](https://www.namecheap.com/)
 
