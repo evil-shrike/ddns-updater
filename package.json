@@ -8,11 +8,19 @@
   },
   "keywords": [
     "ddns",
-    "dns"
+    "dns",
+    "dynamic dns",
+    "dyndns"
   ],
   "author": {
     "name": "Sergei Dorogin",
     "url": "http://about.dorogin.com"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "interval": "^0.1.1",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1",
+    "xml2js": "^0.4.17"
+  }
 }
