@@ -24,7 +24,7 @@ Updater.prototype.update = function (domain, host, ip, settings) {
                     result = res;
                 }
             });
-            console.log(result);
+            //console.log(result);
             /* Expected response:
             <?xml version="1.0"?>
             <interface-response>
@@ -57,4 +57,3 @@ Updater.prototype.generateUrl = function(domain, host, ip, password) {
 }
 
 module.exports = Updater;
-
