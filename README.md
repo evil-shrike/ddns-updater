@@ -2,15 +2,16 @@
 
 > Library for updating dynamic DNS.
 
-Currenty the tool support Namecheap service. 
+The library supports the following Dynamic DNS services:  
+* [Namecheap](https://www.namecheap.com/)
 
 For external IP resolving it uses api.ipify.org service.
+
 
 ## Usage
 
 ```js
 var UpdaterClient = require("ddns-updater");
-
 var config = require('./config.json');
 var updater = new UpdaterClient(config);
 updater.start();
