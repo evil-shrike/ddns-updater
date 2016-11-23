@@ -3,7 +3,7 @@ var querystring = require("querystring");
 var parseString = require("xml2js").parseString;
 
 var Updater = function () {
-    this.baseUrl = 'https://dynamicdns.park-your-domain.1com/update';
+    this.baseUrl = 'https://dynamicdns.park-your-domain.com/update';
     this.options = {
         //url: "",
         //json: true
