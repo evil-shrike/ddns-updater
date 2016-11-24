@@ -178,7 +178,7 @@ Resolver is a module loaded from `resolvers` folder. Module should implement the
 * module exports a class (will be created via `new`)
 * resolver class implements `resolve` method returning a Promise resolved to IP value
 
-> Currently the only resolver supoorted is "api.ipify.org" 
+> Currently the only resolver supported is "api.ipify.org" 
 
 
 ## Acknowledgments
