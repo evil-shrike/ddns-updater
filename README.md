@@ -23,17 +23,50 @@ updater.start();
 where `config.json`:
 ```json
 {
-	"domains" : [{
-		"service"	: "namecheap",
-		"name" 		: "chebyrashka.guru",
-		"hosts"  	: ["@"],
-		"settings"	: {
-			"password": "1a111v11111111a1aaa11a11111111a1"
-		}
-	}],
-    "interval"  	: { "seconds": 5 },
+    "domains" : [{
+        "service"   : "namecheap",
+        "name"      : "chebyrashka.guru",
+        "hosts"     : ["@"],
+        "settings"  : {
+            "password": "1a111v11111111a1aaa11a11111111a1"
+        }
+    }],
+    "interval"      : { "hours": 1 },
     "updateAlways"  : false
 }
+```
+
+It makes sense to run the package via [pm2](https://www.npmjs.com/package/pm2) or the similar.
+
+### More advanced usage
+```js
+var UpdaterClient = require("ddns-updater");
+var config = { }};
+var updater = new UpdaterClient(config);
+
+updater.on('ip:resolve:success', function (service, ip) {
+    console.log('External IP resolved via ' + service + ' : ' + ip);
+});
+
+updater.on('ip:resolve:error', function (service, err) {
+    .log('Failed to resolve external IP: ');
+    console.log(err);
+});
+
+updater.on('ip:change', function (newIP, oldIP) {
+    console.log("IP changed from " + oldIP + " to " + newIP);
+});
+
+updater.on('update:success', function (domain) {
+    console.log("updated: " + JSON.stringify(domain));
+});
+
+updater.on('update:error', function (err, domain) {
+    console.log('Failed to update IP via ' + domain.service + ':');
+    console.log(err);
+});
+
+updater.start();
 ```
 
 ## API
@@ -51,31 +84,32 @@ Every object in the array:
 
 Example:
 ```json
-	"domains" : [{
-		"service"	: "namecheap",
-		"name" 		: "chebyrashka.guru",
-		"hosts"  	: ["@", "www"],
-		"settings"	: {
-			"password": "1a111v11111111a1aaa11a11111111a1"
-		},
-		enable: 	: false
-	}, {
-		"service"	: "noip",
-		"name"		: "my-awesome-cloud.ddns.net",
-		"settings"	: {
-			"username": "me@google.com",
-			"password": "my no-ip password"
-		}
-	}],
+    "domains" : [{
+        "service"  : "namecheap",
+        "name"     : "chebyrashka.guru",
+        "hosts"    : ["@", "www"],
+        "settings" : {
+            "password": "1a111v11111111a1aaa11a11111111a1"
+        },
+        "enable"   :  false
+    }, {
+        "service"  : "noip",
+        "name"     : "my-awesome-cloud.ddns.net",
+        "settings" : {
+            "username": "me@google.com",
+            "password": "my no-ip password"
+        }
+    }],
 ```  
 
 #### interval
 Type: Object  
 How often to check external IP (and update if it's changed).  
 Value: An object in terms of [interval](https://www.npmjs.com/package/interva).  
+Default: 1 hour    
 Example:  
-```
-{"days": 1}
+```json
+"internal": {"days": 1}
 ```
 
 #### updateAlways
@@ -149,7 +183,7 @@ Resolver is a module loaded from `resolvers` folder. Module should implement the
 
 ## Acknowledgments
 
-The package is inspired by:
+The package was inspired by:
 * [node-dyndns-client](https://github.com/kersten/node-dyndns-client)
 * [simple-dynamic-dns-client](https://github.com/symi/simple-dynamic-dns-client)
 

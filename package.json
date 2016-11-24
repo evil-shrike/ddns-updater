@@ -1,6 +1,6 @@
 {
   "name": "ddns-updater",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Pluggable Dynamic DNS updater",
   "main": "index.js",
   "scripts": {
@@ -12,6 +12,14 @@
     "dynamic dns",
     "dyndns"
   ],
+  "homepage": "https://github.com/evil-shrike/ddns-updater",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/evil-shrike/ddns-updater.git"
+  },
+  "bugs": {
+    "url": "https://github.com/evil-shrike/ddns-updater/issues"
+  },
   "author": {
     "name": "Sergei Dorogin",
     "url": "http://about.dorogin.com"
