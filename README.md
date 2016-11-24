@@ -6,6 +6,7 @@
 
 The library supports the following Dynamic DNS services:  
 * [Namecheap](https://www.namecheap.com/)
+* [NoIP](https://my.noip.com)
 
 For external IP resolving it uses api.ipify.org service.
 
@@ -40,16 +41,37 @@ where `config.json`:
 ### Config
 #### domains
 Type: Array  
-An array of objects describing domain.  
-Every object in tge array:
-* `service` - Dynamic DNS service. e.g. "namecheap". Every supported service should have a corresponding module in 'updaters' folder.  
+An array of objects describing a domain.  
+Every object in the array:
+* `service` - name of Dynamic DNS service. e.g. "namecheap". Every supported service should have a corresponding module in 'updaters' folder (module file name w/o extension equals to service name, e.g. `namecheap.js` for "namecheap" service).  
 * `name` - name of domain, e.g. "example.com"  
-* `hosts` - array of host to map to the domain, if only only want naked domain ("example.com") specify "@".  
-* `settings` - an object specific for the servuce, usually containing auth info.  
+* `hosts` - array of host to map to the domain, if you only want naked domain ("example.com") specify "@" or omit field completely.  
+* `settings` - an object specific for the service, usually containing auth info.
+* `enable` - setting to `false` allow to ignore domain updating (useful to temporary disable) 
+
+Example:
+```json
+	"domains" : [{
+		"service"	: "namecheap",
+		"name" 		: "chebyrashka.guru",
+		"hosts"  	: ["@", "www"],
+		"settings"	: {
+			"password": "1a111v11111111a1aaa11a11111111a1"
+		},
+		enable: 	: false
+	}, {
+		"service"	: "noip",
+		"name"		: "my-awesome-cloud.ddns.net",
+		"settings"	: {
+			"username": "me@google.com",
+			"password": "my no-ip password"
+		}
+	}],
+```  
 
 #### interval
 Type: Object  
-How often check external IP (and update if it changed).  
+How often to check external IP (and update if it's changed).  
 Value: An object in terms of [interval](https://www.npmjs.com/package/interva).  
 Example:  
 ```
@@ -99,6 +121,30 @@ Arguments:
  * `service` (String)
  * `name` (String)
  * `host` (String)
+
+
+### Updaters
+Every service from config is a module in "updaters" folder. The tool expect every updater to implement the following API:
+* module exports a class (will be created via `new`)
+* updater class should implement `update` method:
+```
+/**
+ * @param {String} domain
+ * @param {String} host
+ * @param {String} ip
+ * @param {Object} settings
+ * @return {Promise}
+ */
+function update (domain, host, ip, settings)
+```
+
+
+### Resolvers
+Resolver is a module loaded from `resolvers` folder. Module should implement the following API:
+* module exports a class (will be created via `new`)
+* resolver class implements `resolve` method returning a Promise resolved to IP value
+
+> Currently the only resolver supoorted is "api.ipify.org" 
 
 
 ## Acknowledgments
