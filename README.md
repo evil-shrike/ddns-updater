@@ -41,7 +41,7 @@ It makes sense to run the package via [pm2](https://www.npmjs.com/package/pm2) o
 ### More advanced usage
 ```js
 var UpdaterClient = require("ddns-updater");
-var config = { }};
+var config = { /* skipped*/ };
 var updater = new UpdaterClient(config);
 
 updater.on('ip:resolve:success', function (service, ip) {
@@ -118,6 +118,21 @@ Default: `false`
 `true` to update IP every time (once in interval), otherwise update only if IP changed.  
 
 
+#### resolver
+Type: String  
+Default: "ipify"  
+Name of public IP resolve service. Currently supported:  
+* "ipify" (default) - via https://ipify.org
+* "stun" - via [STUN](http://www.ietf.org/rfc/rfc5389.txt) (Google server will be used)
+
+
+#### updaters
+Type: Object  
+An object with mapping of service name to updater class.
+
+See [Updaters](#Updaters) below.
+
+
 ### Events
 
 #### "ip:resolve:success"
@@ -158,10 +173,11 @@ Arguments:
 
 
 ### Updaters
-Every service from config is a module in "updaters" folder. The tool expect every updater to implement the following API:
+Every service from config (`domains[].service`) is an Updater module.
+The tool expects every updater to implement the following API:
 * module exports a class (will be created via `new`)
 * updater class should implement `update` method:
-```
+```js
 /**
  * @param {String} domain
  * @param {String} host
@@ -171,6 +187,14 @@ Every service from config is a module in "updaters" folder. The tool expect ever
  */
 function update (domain, host, ip, settings)
 ```
+By default tool loads updaters from `updaters` folder. By you can specify them explicitly with `updaters` option:
+```js
+var UpdaterClient = require("ddns-updater");
+var SomeUpdater = require("ddns-updater-someservice");
+var config = require('./config.json');
+config.updaters = {"some": SomeUpdater};
+var updater = new UpdaterClient(config);
+```
 
 
 ### Resolvers
@@ -178,7 +202,7 @@ Resolver is a module loaded from `resolvers` folder. Module should implement the
 * module exports a class (will be created via `new`)
 * resolver class implements `resolve` method returning a Promise resolved to IP value
 
-> Currently the only resolver supported is "api.ipify.org" 
+Name of resolver to use is specified in `resolver` config option.
 
 
 ## Acknowledgments

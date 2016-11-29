@@ -1,6 +1,6 @@
 {
   "name": "ddns-updater",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Pluggable Dynamic DNS updater",
   "main": "index.js",
   "scripts": {
@@ -26,10 +26,12 @@
   },
   "license": "MIT",
   "dependencies": {
+    "bluebird": "^3.4.6",
     "date-format": "0.0.2",
     "interval": "^0.1.1",
     "request": "^2.79.0",
     "request-promise": "^4.1.1",
+    "vs-stun": "0.0.7",
     "xml2js": "^0.4.17"
   }
 }

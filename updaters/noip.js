@@ -20,7 +20,7 @@ Updater.prototype.update = function (domain, host, ip, settings) {
     };
     return request(req)
         .then(function (res) {
-            console.log(res);
+            //console.log(res);
 
             // Responses: http://www.noip.com/integrate/response
             /*
