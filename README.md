@@ -8,9 +8,13 @@ The library supports the following Dynamic DNS services:
 * [Namecheap](https://www.namecheap.com/)
 * [NoIP](https://my.noip.com)
 
-For external IP resolving it uses api.ipify.org service.
+For external IP resolving it uses service:
+* https://ipify.org
+* [STUN](http://www.ietf.org/rfc/rfc5389.txt) Google server
+
 
 > [Introduction blog post](https://techblog.dorogin.com/dynamic-dns-updater-38a352ee02f5) with details on how the package can be used in QNAP NAS.
+
 
 ## Usage
 
